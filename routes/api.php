@@ -14,6 +14,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// User Agent
+Route::get('resources', function () {
+    return response()->json([
+       'message' => 'Request success'
+    ]);
+})
+    ->middleware('user_agent');
+
+// Multiplication
+Route::post('multiplication', function () {
+    return response()->json(
+        request()->all()
+    );
+})
+    ->middleware('multiplication');
+
+// Test Group
+Route::prefix('test')->middleware('admin')->group(function () {
+    Route::get('one', function () {return response('success', 200);});
+    Route::get('two', function () {return response('success', 200);});
+    Route::get('three', function () {return response('success', 200);});
+    Route::get('four', function () {return response('success', 200);});
 });
